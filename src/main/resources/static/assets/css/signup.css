@@ -1,0 +1,43 @@
+  .errorBox {
+    position: absolute;
+    z-index: 3;
+    right: -10px;
+    top: -30%;
+  }
+  
+  .errBox_outlined {
+    background: #FF2677;
+    border-radius: 4px;
+    border: none;
+    padding: 6px 10px;
+    font-size: 10px;
+    color: #FFFFFF;
+  }
+  
+  .errBox_arrow {
+    position: absolute;
+    width: 8px;
+    top: calc(100% + 3px);
+    right: min(calc(50% - 2px), 15px);
+    height: 10px;
+    border-color: #FF2677;
+    border-top: 6px solid #FF2677;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-radius: 1px;
+  }
+
+  .inputBox{
+    position: relative;
+  }
+
+  #btnNickName, #btnEmailCode, #btnVerifyCode {
+    padding-right: 8px;
+    padding-left: 8px;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    font-size: 10px;
+    background: var(--bs-secondary);
+    border-style: none;
+    border-radius: 5px;
+}

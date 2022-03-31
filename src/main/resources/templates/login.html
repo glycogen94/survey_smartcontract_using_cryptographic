@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml"
+				xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/img/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/icon/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/icon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/img/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<!-- <script src="/assets/bootstrap/js/bootstrap.min.js"></script> -->
+<script src="/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="/js/sha512.js"></script>
+
+	<title th:text="#{title}"></title>
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+	<!-- <script type="text/javascript" src="/js/sha512.js"></script> -->
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+	<script type="text/javascript">
+		(function () {
+			var queryString = window.location.search;
+			var urlParams = new URLSearchParams(queryString);
+			var error_trigger = urlParams.get('error')
+			const Type = urlParams.get('Type');
+			switch (Type) {
+				case 'BadCredentialsException' :
+					alert("[(#{error.problem_not_find_admin.text})]");
+					break;
+				case 'DisabledException' :
+					alert("[(#{error.problem_deactivation_admin.text})]");
+					break;
+				case 'CredentialsExpiredException' :
+					alert("[(#{error.problem_expired_password.text})]");
+					break;
+				case 'OAuth2AuthenticationException' :
+					alert("[(#{error.problem_OAuth2_authentication.text})]");
+					break;
+				case 'UnknownReson' :
+					alert("[(#{error.problem_unknown_reason.text})]");
+					break;
+				case 'signup' :
+					alert("[(#{login.signup.text})]");
+					break;
+				case 'linkMember' :
+					alert("[(#{login.linkMember.text})]");
+					break;
+			}
+		})()
+	</script>
+</head>
+
+<body>
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-sm-center h-100">
+				<div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+					<!-- <div class="text-center my-5">
+						<img src="https://getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo.svg" alt="logo" width="100">
+					</div> -->
+					<div class="card shadow-lg">
+						<div class="card-body p-5">
+							<h1 class="fs-4 card-title fw-bold mb-4" th:text="#{login.text}"></h1>
+							<form name="login" id="login" method="POST" th:action="@{/login}" class="needs-validation" novalidate="" autocomplete="off" onsubmit="submitReady(this, event);">
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="username"><span th:text="#{id.text}"></span></label>
+									<input id="username" type="text" class="form-control" name="username" value="" required autofocus>
+									<div class="invalid-feedback">
+										<p th:text="#{id.placeholder}"></p>
+									</div>
+								</div>
+
+								<div class="mb-3">
+									<div class="mb-2 w-100">
+										<label class="text-muted" for="pw"><span th:text="#{pw.text}"></span></label>
+										<a th:href="@{/login/forgot}" class="float-end">
+											<span th:text="#{forgot.text1}"></span>
+										</a>
+									</div>
+									<input id="pw" type="password" class="form-control" name="pw" required>
+								    <div class="invalid-feedback">
+								    	<p th:text="#{pw.placeholder}"></p>
+							    	</div>
+								</div>
+
+								<div class="d-flex align-items-center">
+									<div class="form-check">
+										<input type="checkbox" name="auto_login" id="auto_login" class="form-check-input">
+										<label for="remember" class="form-check-label"><span th:text="#{remember_me}"></span></label>
+									</div>
+									<input type="submit" id="btn_login" class="btn btn-primary ms-auto" th:value="#{login.text}" onclick="return transferPassword();">
+								</div>
+								<input type="hidden" id="password" name="password">
+							</form>
+							<!-- <br>
+							<a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+							<a href="/oauth2/authorization/kakao" class="btn btn-success active" role="button">Kakao Login</a>
+							<a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a> -->
+
+						</div>
+						<div class="card-footer py-3 border-0">
+							<div class="text-center">
+								<span th:text="#{login.admin_create.text1}"></span><a sec:authorize="isAnonymous()" th:href="@{/login/signup}" ><span th:text="#{login.admin_create.head}"></span></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<footer class="bd-footer text-muted" style="text-align: center">
+		<div class="container-fluid p-3 p-md-5">
+				<p style="font-size: 80%;" class="lead mb-4"><span th:text="#{footer.text1}"></span></p>
+			<p style="font-size: 80%;" class="lead mb-4"><span th:text="#{footer.text2}"></span></p>
+		</div>
+	</footer>
+
+	<script>
+    	function transferPassword() {
+        	var pw = document.getElementById('pw').value;
+			document.getElementById("password").value = hex_sha512(pw);
+			pw = "";
+    	    return true;
+    	}
+		function submitReady(login_form, event) {
+			if (!login_form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+			}
+
+			login_form.classList.add('was-validated')
+		}
+	</script>
+</body>
+</html>

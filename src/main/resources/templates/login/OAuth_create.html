@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icon/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icon/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icon/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icon/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icon/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icon/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icon/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/img/icon/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/icon/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/icon/favicon-16x16.png">
+<link rel="manifest" href="/assets/img/icon/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/img/icon/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<script type="text/javascript" src="/js/sha512.js"></script>
+
+	<style>
+		.text-input { margin: 3px; }
+		.cmem_subtit {
+			padding-bottom: 10px;
+			border-bottom: 2px solid #222;
+			letter-spacing: -0.3px;
+			color: #222;
+		}
+	</style>
+
+<title th:text="#{title}"></title>
+</head>
+
+<body>
+	<div class="container-xl mb-5 p-4 bg-white shadow-sm">	
+		<h3 th:text="#{login.admin_create.head}"></h3><br>
+		<div class="cmem_subtit">
+			<h4>간편 회원 가입</h4>
+		</div>
+
+		<form id="oauthAdminCreate" th:action="@{/login/OAuth/signup}" method="post">
+			<span th:text="#{id.text}"></span> : <input type="text" id="id" name="id" class="text-input" th:placeholder="#{id.placeholder}"><br>
+			<span th:text="#{pw.text}"></span> : <input type="password" id="pw" name="pw" class="text-input" th:placeholder="#{pw.placeholder}"><br>
+			<span th:text="#{pw.confirm_text}"></span> : <input type="password" id="confirm_pw" name="confirm_pw" class="text-input" th:placeholder="#{pw.placeholder}"><br>
+			<span th:text="#{name.text}"></span> : <input type="text" id="name" name="name" class="text-input" th:placeholder="#{name.placeholder}"><br>
+			<br>
+			<span th:text="#{login.admin_create.caution1}"></span><br>
+			<span th:text="#{login.admin_create.caution2}"></span><br>
+			<br>
+			<input type="hidden" id="hash_pw" name="hash_pw">
+			<input type="hidden" id="oauthId" name="oauthId" th:value="${oauthId}">
+			<input type="hidden" id="email" name="email" th:value="${email}">
+			<input type="hidden" id="registrationId" name="registrationId" th:value="${registrationId}">
+			<input type="submit" id="create" class="btn btn-primary" th:value="#{login.admin_create.btn}" onclick="return checkinputs();"><br>
+		</form>
+	</div>
+
+	<script src="/assets/js/jquery.min.js"></script>
+	<script>
+		// $(function(){
+			// var previousUrl = location.href;
+
+			// console.log(previousUrl);
+
+			// var observer = new MutationObserver(function(mutations) {
+			// 	if (location.href !== previousUrl) {
+			// 		previousUrl = location.href;
+			// 		console.log(`URL changed to ${location.href}`);
+			// 		$.ajax({
+			// 			type:"GET",
+			// 			url: "/login/OAuth/request",
+			// 			async: false,
+			// 			error : function(e){
+			// 				console.log(e);
+			// 			},
+			// 			success : function(result) {
+			// 				console.log(result);
+			// 			}
+			// 		});
+			// 	}
+			// });
+
+			// window.addEventListener('popstate', () => {
+			// 	// if (self.screenTop > 9000 || document.readyState =="loading") {
+			// 		console.log("새로고침 제외");
+			// 		$.ajax({
+			// 			type:"GET",
+			// 			url: "/login/OAuth/request",
+			// 			async: false,
+			// 			error : function(e){
+			// 				console.log(e);
+			// 			},
+			// 			success : function(result) {
+			// 				console.log(result);
+			// 			}
+			// 		});
+			//	// } else if (document.readyState == "complete") console.log("새로고침"); //새로고침
+			// })
+
+		// 	window.addEventListener("load", function() {
+		// 	let oldHref = document.location.href,
+		// 		bodyDOM = document.querySelector("body");
+		// 	const observer = new MutationObserver(function(mutations) {
+		// 		if (oldHref != document.location.href) {
+		// 			oldHref = document.location.href;
+		// 			console.log("the location href is changed!");
+		// 			$.ajax({
+		// 				type:"GET",
+		// 				url: "/login/OAuth/request",
+		// 				async: false,
+		// 				error : function(e){
+		// 					console.log(e);
+		// 				},
+		// 				success : function(result) {
+		// 					console.log(result);
+		// 				}
+		// 			});
+		// 			window.requestAnimationFrame(function() {
+		// 				let tmp = document.querySelector("body");
+		// 				if(tmp != bodyDOM) {
+		// 					bodyDOM = tmp;
+		// 					observer.observe(bodyDOM, config);
+		// 				}
+		// 			})
+		// 		}
+		// 	});
+		// 	const config = {
+		// 		childList: true,
+		// 		subtree: true
+		// 	};
+		// 	observer.observe(bodyDOM, config);
+		// 	}, true);
+		// });
+
+		// $(function(){
+			// var trigger = false;
+		// 	// Warning
+		// 	$(window).on('beforeunload', function(){
+		// 		//do something
+		// 		console.log(window.performance.navigation);
+		// 		console.log(window.performance.navigation.type);
+		// 		console.log(window.performance
+		// 			.getEntriesByType('navigation')
+		// 			.map((nav) => nav.type)
+		// 			.includes('reload'));
+		// 		const pageAccessedByReload = (
+		// 		(window.performance.navigation && window.performance.navigation.type === 1) ||
+		// 			window.performance
+		// 			.getEntriesByType('navigation')
+		// 			.map((nav) => nav.type)
+		// 			.includes('reload')
+		// 		);
+		// 		console.log(pageAccessedByReload);
+		// 		if (pageAccessedByReload) {
+		// 			console.log("reload");
+		// 			return ;
+		// 		}
+		// 		else if (trigger && ! pageAccessedByReload) {
+		// 			console.log("etc");
+		// 			$.ajax({
+		// 				type:"GET",
+		// 				url: "/login/OAuth/request",
+		// 				async: false,
+		// 				error : function(e){
+		// 					console.log(e);
+		// 				},
+		// 				success : function(result) {
+		// 					console.log(result);
+		// 				}
+		// 			});
+		// 		}
+		// 		trigger = true;
+		// 	});
+		// 	// Form Submit
+		// 	$(document).on("submit", "form", function(event){
+		// 		// disable warning
+		// 		console.log("submit");
+		// 		$(window).off('beforeunload');
+		// 	});
+		// })
+		// var trigger = false;
+
+		// function checkOnload() {
+		// 	$(document).on("submit", "form", function(event){
+		// 		// disable warning
+		// 		console.log("submit");
+		// 	});
+		// 	console.log(window.performance.navigation);
+		// 	console.log(window.performance.navigation.type);
+		// 	console.log(window.performance
+		// 		.getEntriesByType('navigation')
+		// 		.map((nav) => nav.type)
+		// 		.includes('reload'));
+		// 	const pageAccessedByReload = (
+		// 	(window.performance.navigation && window.performance.navigation.type === 1) ||
+		// 		window.performance
+		// 		.getEntriesByType('navigation')
+		// 		.map((nav) => nav.type)
+		// 		.includes('reload')
+		// 	);
+		// 	console.log(pageAccessedByReload);
+		// 	console.log(trigger);
+		// 	if (pageAccessedByReload) {
+		// 		console.log("reload");
+		// 	}
+		// 	else if(trigger && ! pageAccessedByReload) {
+		// 		console.log("etc");
+		// 		$.ajax({
+		// 			type:"GET",
+		// 			url: "/login/OAuth/request",
+		// 			async: false,
+		// 			error : function(e){
+		// 				console.log(e);
+		// 			},
+		// 			success : function(result) {
+		// 				console.log(result);
+		// 			}
+		// 		});
+		// 	}
+		// 	trigger = true;
+		// 	return ;
+		// }			
+		
+		// function checkOnload() {
+		// 	const pageAccessedByReload = (
+		// 	(window.performance.navigation && window.performance.navigation.type === 1) ||
+		// 		window.performance
+		// 		.getEntriesByType('navigation')
+		// 		.map((nav) => nav.type)
+		// 		.includes('reload')
+		// 	);
+
+		// 	// alert(pageAccessedByReload);
+		// 	console.log(pageAccessedByReload);
+		// }
+
+		// $(document).ready(function () {
+			// $(window).on("beforeunload", function () {
+			// 	$.ajax({
+			// 		type:"GET",
+			// 		url: "/login/OAuth/request",
+			// 		// async: false,
+			// 		error : function(e){
+			// 			// console.log("error");
+			// 			console.log(e);
+			// 		},
+			// 		success : function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	})
+
+			// 	return e.originalEvent.returnValue = "이 페이지를 벗어나시겠습니까?";
+			// });
+
+			// window.addEventListener('beforeunload', (event) => { 
+			// 	// Cancel the event as stated by the standard. 
+			// 	event.preventDefault(); 
+			// 	// Chrome requires returnValue to be set. 
+			// 	event.returnValue = '이 페이지를 벗어나시겠습니까?'; 
+			// 	$.ajax({
+			// 		type:"GET",
+			// 		url: "/login/OAuth/request",
+			// 		// async: false,
+			// 		error : function(e){
+			// 			// console.log("error");
+			// 			console.log(e);
+			// 		},
+			// 		success : function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	})
+			// });
+
+			// window.addEventListener("beforeunload", function (e) {
+			// 	event.preventDefault();
+
+			// 	$.ajax({
+			// 		type:"GET",
+			// 		url: "/login/OAuth/request",
+			// 		// async: false,
+			// 		error : function(e){
+			// 			// console.log("error");
+			// 			console.log(e);
+			// 		},
+			// 		success : function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	})
+
+			// 	var confirmationMessage = "이 페이지를 벗어나시겠습니까?";
+
+			// 	(e || window.event).returnValue = confirmationMessage;     // Gecko + IE
+			// 	return confirmationMessage;                                /* Safari, Chrome, and other
+			// 																* WebKit-derived browsers */
+			// });
+
+			// $(window).on("beforeunload", function (e) {
+			// 	$.ajax({
+			// 		type:"GET",
+			// 		url: "/login/OAuth/request",
+			// 		// async: false,
+			// 		error : function(error){
+			// 			// console.log("error");
+			// 			console.log(error);
+			// 		},
+			// 		success : function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	});
+			// 	var confirmationMessage = "\o/";
+
+			// 	(e || window.event).returnValue = confirmationMessage;     // Gecko + IE
+			// 	return confirmationMessage;                                /* Safari, Chrome, and other
+			// 															// * WebKit-derived browsers */
+			// });
+
+			// $(document).on("submit", "form", function(event){ $(window).off('beforeunload'); });
+
+			// $(window).on("unload", function () {
+
+			// 	// $.ajax({
+			// 	// 	type:"GET",
+			// 	// 	url: "/login/OAuth/request",
+			// 	// 	async: false,
+			// 	// 	error : function(error){
+			// 	// 		// console.log("error");
+			// 	// 		console.log(error);
+			// 	// 	},
+			// 	// 	success : function(result) {
+			// 	// 		console.log(result);
+			// 	// 	}
+			// 	// });
+			// 	var data = new FormData();
+			// 	data.append("[(${_csrf.parameterName})]", "[(${_csrf.token})]");
+			// 	navigator.sendBeacon("http://192.168.0.121:8080/login/OAuth/request", data);
+			// });
+
+			// $(window).on("unload", function(){
+			// 	$.ajax({
+			// 		type:"GET",
+			// 		url: "/login/OAuth/request",
+			// 		// async: false,
+			// 		error : function(error){
+			// 			// console.log("error");
+			// 			console.log(error);
+			// 		},
+			// 		success : function(result) {
+			// 			console.log(result);
+			// 		}
+			// 	});
+			// });
+
+			// $(window).on("unload", () => {
+			// 	window.navigator.sendBeacon("http://192.168.0.121:8080/login/OAuth/request"); 
+			// }, false);
+
+
+			// $(document).on("submit", "form", function(event){ $(window).off('unload'); });
+
+			// window.addEventListener("beforeunload", () => {
+			// 	window.navigator.sendBeacon("/login/OAuth/request");
+			// }, false)
+		// });
+		// window.onunload = function analytics(event) {
+		// 	if (!navigator.sendBeacon) return;
+
+		// 	var url = "http://192.168.0.121:8080/login/OAuth/request";
+		// 	// Create the data to send
+		// 	// var data = "state=" + event.type + "&location=" + location.href;
+
+		// 	// Send the beacon
+		// 	var status = navigator.sendBeacon(url);
+
+		// 	// Log the data and result
+		// 	console.log("sendBeacon: URL = ", url, "; status = ", status);
+		// };
+		// function call_unload() {
+		// 	$.ajax({
+		// 		type:"GET",
+		// 		url: "/login/OAuth/request",
+		// 		async: false,
+		// 		error : function(e){
+		// 			console.log(e);
+		// 		},
+		// 		success : function(result) {
+		// 			console.log(result);
+		// 		}
+		// 	});
+		// }
+
+
+    	function checkinputs() {
+        	var id = document.getElementById('id').value;
+        	var pw = document.getElementById('pw').value;
+			var confirm_pw = document.getElementById('confirm_pw').value;
+        	var name = document.getElementById('name').value;
+
+        	var RegExpId = /^[A-Za-z0-9]{1,30}$/;
+        	var RegExpPw = /^[A-Za-z0-9#?!@$%^&*-]{8,30}$/; /* 모두 포함해야하는 경우라면: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,300}$/; */
+        	if(!RegExpId.test(id) || !RegExpPw.test(pw)) {
+        		alert("아이디와 비밀번호는 아래의 조건으로 30자 이하로 만들어야 합니다.")
+        		return false;
+        	}
+        	
+        	/* 30자 제한 */
+	        var RegExp30 = /^(.){0,30}$/;
+	        if(!RegExp30.test(name)) {
+		       	alert("이름은 30자 제한입니다.");
+		       	return false;
+		    }
+
+			if(pw!=confirm_pw) {
+				alert("비밀번호가 일치하지 않습니다.");
+            	return false;
+			}
+        	
+        	if(name == "" ) {
+            	alert("빈칸을 채우십시오.");
+            	return false;
+        	} else {
+        	    /* alert("비활성화"); */
+				alert("간편 회원 가입 되었습니다.");
+				document.getElementById("hash_pw").value = hex_sha512(pw);
+				pw = "";
+				confirm_pw = "";
+    	        return true;
+	        }
+    	}
+	</script>
+</body>
+</html>

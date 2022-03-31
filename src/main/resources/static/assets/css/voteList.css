@@ -1,0 +1,124 @@
+.footer_nav {
+  position: absolute;
+  display: inline-flex;
+  text-align: center;
+  width: 100vw;
+  height: 80px;
+  top: 0;
+  left: 0;
+  justify-content: space-around;
+  align-items: center;
+  text-decoration-line: none;
+}
+
+.footer_nav input {
+  display: none;
+}
+
+.footer_text {
+  display: block;
+  text-decoration-line: none;
+  color: #b2b2b2;
+}
+
+input:checked ~ .footer_text {
+  color: var(--bs-secondary);
+}
+
+input:checked + .footer_vote_img {
+  color: var(--bs-secondary);
+  content: url("/assets/img/home/main_vote_enable.svg");
+}
+
+input:checked + .footer_home_img {
+  color: var(--bs-secondary);
+  content: url("/assets/img/home/main_home_enable.svg");
+}
+
+input:checked + .footer_news_img {
+  color: var(--bs-secondary);
+  content: url("/assets/img/home/main_news_enable.svg");
+}
+
+input:checked + .footer_setting_img {
+  color: var(--bs-secondary);
+  content: url("/assets/img/home/main_setting_enable.svg");
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: calc((100vw - (2 * 5.438%)) / 4);
+  height: 35px;
+  vertical-align: middle;
+  width: 55px;
+  margin-right: 5px;
+  margin-bottom: 0px;
+}
+
+.switch input {
+  display: none;
+}
+
+input:checked + .slider {
+  background-color: var(--bs-secondary);
+  color: var(--bs-white);
+}
+
+.votelist_Container {
+  background: var(--bs-white);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bs-white);
+  border-width: 1px;
+  border-style: solid;
+  border-color: #EFEFEF;
+  border-radius: 5px;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border: none;
+  font-size: 13px;
+  text-decoration-line: none;
+}
+
+.tab_cont {
+  clear: both;
+  border: 1px solid #dedede;
+  height: 130px;
+  background-color: #cecece;
+}
+
+.tab_cont div {
+  display: none;
+  text-align: center;
+}
+
+.tab_cont div.on {
+  display: block;
+}
+
+.tab_title li {
+  list-style: none;
+  float: left;
+  width: 100px;
+  padding: 10px 15px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #bebebe;
+}
+
+.tab_title li.on {
+  background-color: #ffb715;
+  font-weight: bold;
+}
+

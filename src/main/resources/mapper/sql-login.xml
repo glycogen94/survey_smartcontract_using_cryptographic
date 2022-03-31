@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="demo.mapper.LoginMapper">
+	<select id="adminSelectById" parameterType="string" resultType="demo.dto.AdminDto">
+		<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE BINARY id=#{id}
+		]]>
+	</select>
+
+	<insert id="createAdmin" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			INSERT INTO admin(id, pw, created, name, email)
+			VALUES(#{id}, #{pw}, NOW(), #{name}, #{email})
+		]]>
+	</insert>
+
+	<insert id="createOAuthAdmin" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			INSERT INTO admin(id, created, name, email)
+			VALUES(#{id}, NOW(), #{name}, #{email})
+		]]>
+	</insert>
+	
+	<select id="findAdminSelect" parameterType="demo.dto.AdminDto" resultType="demo.dto.AdminDto">
+		<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE BINARY id=#{id} 
+		]]>
+	</select>
+
+	<select id="findAdminSelectUsingIdAndEmail" parameterType="demo.dto.AdminDto" resultType="demo.dto.AdminDto">
+		<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE BINARY id=#{id}  and BINARY email=#{email}
+		]]>
+	</select>
+
+	<select id="findSameEmailSelect" parameterType="string" resultType="demo.dto.AdminDto">
+			<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE BINARY email=#{email}
+		]]>
+	</select>
+
+	<update id="updateAdminName" parameterType="map">
+		<![CDATA[
+			UPDATE admin
+			SET name=#{name}
+			WHERE BINARY id=#{id}
+		]]>	
+	</update>
+
+	<update id="updateAdminPw" parameterType="map">
+		<![CDATA[
+			UPDATE admin
+			SET pw=#{pw}
+			WHERE BINARY id=#{id}
+		]]>	
+	</update>
+
+	<update id="updateAdminInfo" parameterType="map">
+		<![CDATA[
+			UPDATE admin
+			SET name=#{name}, email=#{email}, pw=#{pw}
+			WHERE BINARY id=#{id}
+		]]>	
+	</update>
+
+	<update id="updateOAuthAdmin" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			UPDATE admin
+			SET name=#{name}, email=#{email}
+			WHERE BINARY id=#{id}
+		]]>	
+	</update>
+
+	<delete id="deleteAdmin" parameterType="string">
+		<![CDATA[
+			DELETE FROM admin
+            WHERE BINARY id=#{id}
+		]]>
+	</delete>
+
+	<select id="findByGoogleSub" parameterType="string" resultType="demo.dto.AdminDto">
+			<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE google_sub=#{googleSub}
+		]]>
+	</select>
+
+	<select id="findByNaverId" parameterType="string" resultType="demo.dto.AdminDto">
+			<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE naver_id=#{naverId}
+		]]>
+	</select>
+
+	<select id="findByKakaoId" parameterType="long" resultType="demo.dto.AdminDto">
+			<![CDATA[
+			SELECT *
+			FROM admin
+			WHERE kakao_id=#{kakaoId}
+		]]>
+	</select>
+
+	<insert id="createByGoogleSub" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			INSERT INTO admin(id, pw, created, name, email, google_sub)
+			VALUES(#{id}, #{pw}, NOW(), #{name}, #{email}, #{googleSub})
+		]]>
+	</insert>
+
+	<insert id="createByNaverId" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			INSERT INTO admin(id, pw, created, name, email, naver_id)
+			VALUES(#{id}, #{pw}, NOW(), #{name}, #{email}, #{naverId})
+		]]>
+	</insert>
+
+	<insert id="createByKakaoId" parameterType="demo.dto.AdminDto">
+		<![CDATA[
+			INSERT INTO admin(id, pw, created, name, email, kakao_id)
+			VALUES(#{id}, #{pw}, NOW(), #{name}, #{email}, #{kakaoId})
+		]]>
+	</insert>
+
+	<update id="saveByGoogleSub" parameterType="demo.dto.AdminDto">
+			<![CDATA[
+			UPDATE admin
+			SET google_sub=#{googleSub}
+			WHERE BINARY id=#{id}
+		]]>
+	</update>
+
+	<update id="saveByNaverId" parameterType="demo.dto.AdminDto">
+			<![CDATA[
+			UPDATE admin
+			SET naver_id=#{naverId}
+			WHERE BINARY id=#{id}
+		]]>
+	</update>
+
+	<update id="saveByKakaoId" parameterType="demo.dto.AdminDto">
+			<![CDATA[
+			UPDATE admin
+			SET kakao_id=#{kakaoId}
+			WHERE BINARY id=#{id}
+		]]>
+	</update>
+
+	
+	<insert id="persistentLoginsInsert" parameterType="map">
+		<![CDATA[
+			INSERT INTO persistent_logins(series, last_used, tokenValue, username)
+            VALUES(#{series}, #{last_used}, #{tokenValue}, #{username})
+		]]>
+	</insert>
+
+	<update id="persistentLoginsUpdate" parameterType="map">
+		<![CDATA[
+			UPDATE persistent_logins
+			SET last_used=#{last_used}, tokenValue=#{tokenValue}
+			WHERE series=#{series}
+		]]>	
+	</update>
+
+	<select id="persistentLoginsSelect" parameterType="String" resultType="map">
+		<![CDATA[
+			SELECT *
+			FROM persistent_logins
+			WHERE series=#{series}
+		]]>
+	</select>
+
+	<delete id="persistentLoginsDelete" parameterType="String">
+		<![CDATA[
+			DELETE FROM persistent_logins
+            WHERE username=#{username}
+		]]>
+	</delete>
+</mapper>
+
+<!-- CREATE TABLE admin (
+  admin_id int unsigned NOT NULL AUTO_INCREMENT,
+  id varchar(30) NOT NULL,
+  pw varchar(60) DEFAULT NULL,
+  created datetime NOT NULL,
+  name varchar(30) DEFAULT NULL,
+  email varchar(255) DEFAULT NULL,
+  google_sub varchar(255) DEFAULT NULL,
+  naver_id varchar(64) DEFAULT NULL,
+  kakao_id bigint DEFAULT NULL,
+  PRIMARY KEY (admin_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci; -->

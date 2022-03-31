@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="apple-touch-icon" sizes="57x57" href="/assets/img/icon/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/assets/img/icon/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/icon/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/assets/img/icon/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/icon/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/assets/img/icon/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/assets/img/icon/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/assets/img/icon/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/assets/img/icon/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/icon/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/assets/img/icon/favicon-16x16.png">
+	<link rel="manifest" href="/assets/img/icon/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/assets/img/icon/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script type="text/javascript" src="/js/sha512.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<style>
+		.text-input { margin: 3px; }
+		.btn-input { margin: 10px; }
+		.feedback {
+			display : none;
+			width: 100%;
+			margin-top: 0.25rem;
+			font-size:.875em;
+			color: #dc3545;
+		}
+		.my-invalid {
+			display: block;
+			width: 100%;
+			padding: .375rem .75rem;
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5;
+			color: #212529;
+			background-color: #fff;
+			background-clip: padding-box;
+			border: 1px solid #ced4da;
+			-webkit-appearance: none;	
+			-moz-appearance: none;
+			appearance: none;
+			border-radius: .25rem;
+			transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+			border-color: #dc3545;
+			padding-right: calc(1.5em + .75rem);
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+			background-repeat: no-repeat;
+			background-position: right calc(.375em + .1875rem) center;
+			background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+		}
+	</style>
+
+<title th:text="#{title}"></title>
+</head>
+
+<body>
+	<div class="container-xl mb-5 p-4 bg-white shadow-sm">	
+		<h3 th:text="#{login.admin_create.head}"></h3><br>
+		<div class="w-50">
+			<form id="admincreate" th:action="@{/login/signup}" method="POST" class="needs-validation" novalidate="" autocomplete="off" onsubmit="submitReady(this, event); return checkinputs();">
+				<div class="mb-3">
+					<label class="mb-2 text-muted" for="id"><span th:text="#{id.text}"></span></label>
+					<input id="id" type="text" class="form-control" name="id" value="" required autofocus>
+					<div class="invalid-feedback">
+						<p th:text="#{id.placeholder}"></p>
+					</div>
+					<p id="checkId" class="feedback" th:text="#{script.admin.alert4}"></p>
+				</div>
+
+				<div class="mb-3">
+					<label class="mb-2 text-muted" for="pw"><span th:text="#{pw.text}"></span></label>
+					<input id="pw" type="password" class="form-control" name="pw" required>
+					<div class="invalid-feedback">
+						<p th:text="#{pw.placeholder}"></p>
+					</div>
+					<p id="checkPw" class="feedback" th:text="#{script.admin.alert5}"></p>
+				</div>
+
+				<div class="mb-3">
+					<label class="mb-2 text-muted" for="confirm_pw"><span th:text="#{pw.confirm_text}"></span></label>
+					<input id="confirm_pw" type="password" class="form-control" name="confirm_pw" required>
+					<div class="invalid-feedback">
+						<p th:text="#{pw.placeholder}"></p>
+					</div>
+					<p id="checkPwConfirm" class="feedback" th:text="#{script.admin.alert3}"></p>
+				</div>
+
+
+				<div class="mb-3">
+					<label class="mb-2 text-muted" for="name"><span th:text="#{name.text}"></span></label>
+					<input id="name" type="text" class="form-control" name="name" value="" required>
+					<div class="invalid-feedback">
+						<p th:text="#{name.placeholder}"></p>
+					</div>
+					<p id="checkName" class="feedback" th:text="#{script.admin.alert2}"></p>
+				</div>
+
+				<div class="mb-3">
+					<label class="mb-2 text-muted" for="email"><span th:text="#{email.text}"></span></label>
+					<div class="row g-3">
+						<div class="col-auto">
+							<input type="email" id="email" name="email" class="form-control" th:placeholder="#{email.placeholder}" th:value="${email}" th:readonly="${readonly}" required>
+						</div>
+						<div class="col-auto">
+							<a class="btn btn-primary" id="send_email"><span id="send_email_btn" th:text="#{login.signup.text1}"></span></a>
+						</div>
+					</div><br>
+					<input type="number" id="input_code" name="input_code" class="form-control" th:placeholder="#{login.signup.text2}" required onkeypress="return false;">
+
+				</div>
+
+				<p class="form-text text-muted mb-3">
+					By registering you agree with our terms and condition.
+				</p>
+
+				<div class="align-items-center d-flex">
+					<input type="submit" id="create" class="btn btn-primary ms-auto" style="width: 100%;" th:value="#{login.signup.text3}" ><br>
+				</div>
+				<input type="hidden" id="hash_pw" name="hash_pw">
+				<input type="hidden" id="target_email" name="target_email">
+			</form>
+
+			<!-- <br>
+			<a href="/oauth2/authorization/google" class="btn btn-success active" role="button">Google Login</a>
+			<a href="/oauth2/authorization/kakao" class="btn btn-success active" role="button">Kakao Login</a>
+			<a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">Naver Login</a> -->
+
+		</div>
+	</div>
+
+	<script>
+		$(document).ready( function () {
+			var expir;
+			const remaining_time = "[(#{login.signup.text4})]";
+			$("#send_email").on("click", function() {
+				console.log("Enter send_email");
+				expir = checkEmail();
+			})
+			let countDouwn = setInterval(() => {
+				var now = new Date().getTime();
+				if(now < expir) {
+					sec = parseInt(expir-now) / 1000;
+					$("#input_code").attr("placeholder", remaining_time + parseInt(sec));
+				} 
+			}, 1000)
+			setTimeout(() => clearInterval(countDouwn), 300000)
+			
+		})
+
+		function submitReady(form, event) {
+			if (!form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+			}
+
+			form.classList.add('was-validated')
+		}
+    	function checkinputs() {
+			var id = document.getElementById('id').value;
+			var pw = document.getElementById('pw').value;
+			var confirm_pw = document.getElementById('confirm_pw').value;
+			var name = document.getElementById('name').value;
+			if (id!="" && name!="" && pw!="" && confirm_pw!=""){
+				var RegExpId = /^[A-Za-z0-9]{1,30}$/;
+				var RegExpPw = /^[A-Za-z0-9#?!@$%^&*-]{8,30}$/; /* 모두 포함해야하는 경우라면: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,300}$/; */
+				document.getElementById('checkId').style.display="none";
+				document.getElementById('checkName').style.display="none";
+				document.getElementById('checkPw').style.display="none";
+				document.getElementById('checkPwConfirm').style.display="none";
+				document.getElementById('id').classList.replace("my-invalid", "form-control");
+				document.getElementById('name').classList.replace("my-invalid", "form-control");
+				document.getElementById('pw').classList.replace("my-invalid", "form-control");
+				document.getElementById('confirm_pw').classList.replace("my-invalid", "form-control");
+				var status = true;
+				if(!RegExpId.test(id)) {
+					// alert("[(#{script.admin.alert4})]")
+					document.getElementById('id').classList.replace("form-control", "my-invalid")
+					document.getElementById('checkId').style.display="block";
+					status = false;
+				}
+
+				/* 30자 제한 */
+				var RegExp30 = /^(.){0,30}$/;
+				if(!RegExp30.test(name)) {
+					// alert("[(#{script.admin.alert2})]");
+					document.getElementById('name').classList.replace("form-control", "my-invalid")
+					document.getElementById('checkName').style.display="block";
+					status = false;
+				}
+
+
+				if(!RegExpPw.test(pw)) {
+					// alert("[(#{script.admin.alert5})]")
+					document.getElementById('pw').classList.replace("form-control", "my-invalid")
+					document.getElementById('checkPw').style.display="block";
+					status = false;
+				}
+				
+				if(pw!=confirm_pw) {
+					// alert("[(#{script.admin.alert3})]");
+					document.getElementById('confirm_pw').classList.replace("form-control", "my-invalid")
+					// document.getElementById('confirm_pw').classList.add("my-invalid");
+					document.getElementById('checkPwConfirm').style.display="block";
+					status = false;
+				}
+				
+				// if(name == "" ) {
+				// 	alert("[(#{script.alert})]");
+				// 	return false;
+				// } else {
+					/* alert("비활성화"); */
+				// if(id!="" && name!="" && pw!="" && confirm_pw!="") {
+				if(status) {
+					document.getElementById("hash_pw").value = hex_sha512(pw);
+					pw = "";
+					confirm_pw = "";
+				}
+				
+				return status;
+				// }
+			}
+    	}
+
+		function checkEmail() {
+			var email = $("#email").val();
+			var return_val = false;
+			var oMsg = $("#err_message_email");
+			var mode = "sendEmail";
+
+			var isEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+			if(email=="")
+			{
+				hideMsg(oMsg);
+				return false;   
+			}
+			else if (!isEmail.test(email)) {
+				showErrorMsg(oMsg, "[(#{login.signup.text5})]");
+				return false;
+			}else
+				hideMsg(oMsg);
+
+			$.ajax({
+				type:"GET",
+				url: "/login/email/request?mode=" + mode + "&input=" + email,
+				async: false,
+				error : function(){
+				},
+				success : function(result) {
+					// console.log(result);
+					// if (result == "succ_existCheck") {
+					// 	alert("[(#{login.email.caution})]");
+					// 	return_val = true;
+					// } 
+					if (result == "duplicated_email") {
+						alert("[(#{error.problem_same_email.text})]");
+						return_val = false;
+					} else if (result == "succ") {
+						alert("[(#{login.signup.text6})]")
+
+						alert("[(#{login.email.caution})]");
+						$("#check_email").removeAttr("disabled");
+						$("#email").prop("readonly", true);
+						$("#target_email").val(email);
+						// $("#send_email_btn").text("인증");
+						// $("#input_code").removeAttr("readonly");
+						$("#input_code").removeAttr("onkeypress");
+						expir = new Date().getTime() + 5*60000;
+						return_val = expir
+					} else if (result == "fail_send") {
+						alert("[(#{login.signup.text7})]")
+					}
+					else {
+						alert("[(#{bad_request})]");
+						return_val = false;
+					}
+				}
+			});
+			return return_val;
+		}
+		function showErrorMsg(obj, msg) {
+			obj.html(msg);
+			obj.parent().css("visibility","visible")
+		}
+		function hideMsg(obj) {
+			obj.parent().css("visibility","hidden")
+		}
+	</script>
+	
+</body>
+</html>

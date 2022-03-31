@@ -1,0 +1,34 @@
+<svg id="그룹_28145" data-name="그룹 28145" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: none;
+      }
+
+      .cls-1 {
+        stroke: rgba(0,0,0,0);
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 1.5px;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="사각형_3928" data-name="사각형 3928" class="cls-1" width="30" height="30"/>
+    </clipPath>
+  </defs>
+  <g id="그룹_6332" data-name="그룹 6332" class="cls-2">
+    <g id="그룹_6340" data-name="그룹 6340" transform="translate(6.771 4.286)">
+      <path id="패스_4252" data-name="패스 4252" class="cls-3" d="M14.067,21.066h-7.5a.716.716,0,0,1-.624-1.074,7.174,7.174,0,0,0,.991-3.607V13a7.142,7.142,0,0,1,7.141-7.14h0A7.141,7.141,0,0,1,21.209,13v3.386a7.186,7.186,0,0,0,.991,3.607.716.716,0,0,1-.624,1.074H14.067Z" transform="translate(-5.841 -3.353)"/>
+      <path id="패스_4253" data-name="패스 4253" class="cls-3" d="M9.861,19.182a3.609,3.609,0,1,0,7.217,0" transform="translate(-5.24 -1.362)"/>
+      <line id="선_45" data-name="선 45" class="cls-3" y1="2.36" transform="translate(8.227)"/>
+    </g>
+  </g>
+</svg>
